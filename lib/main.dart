@@ -1,8 +1,13 @@
-import 'package:ecommerce_ui/views/home.dart';
+import 'package:ecommerce_ui/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const Ecommerce());
+  runApp(
+    const ProviderScope(
+      child: Ecommerce(),
+    ),
+  );
 }
 
 class Ecommerce extends StatelessWidget {
@@ -13,10 +18,8 @@ class Ecommerce extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'E-commerce',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomeView(),
+      debugShowCheckedModeBanner: false,
+      home: ProjectLayout(),
     );
   }
 }
