@@ -1,4 +1,4 @@
-import 'package:ecommerce_ui/layout.dart';
+import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,10 +16,10 @@ class Ecommerce extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
-      home: ProjectLayout(),
+      home: LoginView(),
     );
   }
 }
