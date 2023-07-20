@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RegistrationView extends ConsumerWidget {
-  const RegistrationView({super.key});
+  RegistrationView({super.key});
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,21 +69,21 @@ class RegistrationView extends ConsumerWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(),
+                    InputField(controller: nameController),
                     SizedBox(height: 20),
                     Text(
                       "Email Address",
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(),
+                    InputField(controller: emailController),
                     SizedBox(height: 20),
                     Text(
                       "Password",
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(),
+                    InputField(controller: passwordController),
                     SizedBox(height: 20),
                     AuthButton(
                       text: 'Sign Up',

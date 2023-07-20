@@ -1,4 +1,6 @@
 import 'package:ecommerce_ui/constants/themes.dart';
+import 'package:ecommerce_ui/controllers/auth_controller.dart';
+import 'package:ecommerce_ui/providers/login_controller_provider.dart';
 import 'package:ecommerce_ui/views/authentication/registration.dart';
 import 'package:ecommerce_ui/widgets/auth_button.dart';
 import 'package:ecommerce_ui/widgets/input_field.dart';
@@ -6,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginView extends ConsumerWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,18 +70,28 @@ class LoginView extends ConsumerWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(),
+                    InputField(
+                      controller: emailController,
+                    ),
                     SizedBox(height: 20),
                     Text(
                       "Password",
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(),
+                    InputField(controller: passwordController),
                     SizedBox(height: 20),
                     AuthButton(
                       text: 'Sign In',
-                      onPressed: () {},
+                      onPressed: () {
+                        ref
+                            .read(authenticationControllerProvider.notifier)
+                            .login(
+                              emailController.text,
+                              passwordController.text,
+                              context,
+                            );
+                      },
                     ),
                     SizedBox(height: 20),
                     Row(

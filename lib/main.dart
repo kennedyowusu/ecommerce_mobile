@@ -10,15 +10,18 @@ void main() {
   );
 }
 
-class Ecommerce extends StatelessWidget {
+class Ecommerce extends ConsumerWidget {
   const Ecommerce({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: LoginView(),
     );
   }
