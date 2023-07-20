@@ -1,6 +1,6 @@
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/controllers/auth_controller.dart';
-import 'package:ecommerce_ui/providers/states/login_states.dart';
+import 'package:ecommerce_ui/providers/states/auth_states.dart';
 import 'package:ecommerce_ui/views/authentication/registration.dart';
 import 'package:ecommerce_ui/widgets/auth_button.dart';
 import 'package:ecommerce_ui/widgets/input_field.dart';
@@ -15,7 +15,8 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LoginState state = ref.watch(authenticationControllerProvider);
+    final AuthenticationState state =
+        ref.watch(authenticationControllerProvider);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -82,7 +83,7 @@ class LoginView extends ConsumerWidget {
                     SizedBox(height: 5),
                     InputField(controller: passwordController),
                     SizedBox(height: 20),
-                    state is LoginLoading
+                    state is AuthenticationLoading
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
@@ -91,7 +92,8 @@ class LoginView extends ConsumerWidget {
                             onPressed: () {
                               ref
                                   .read(
-                                      authenticationControllerProvider.notifier)
+                                    authenticationControllerProvider.notifier,
+                                  )
                                   .login(
                                     emailController.text,
                                     passwordController.text,

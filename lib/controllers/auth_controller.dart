@@ -1,33 +1,75 @@
-import 'package:ecommerce_ui/providers/states/login_states.dart';
+import 'dart:io';
+
+import 'package:ecommerce_ui/providers/states/auth_states.dart';
 import 'package:ecommerce_ui/service/auth_service.dart';
 import 'package:ecommerce_ui/views/home.dart';
+import 'package:ecommerce_ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AuthenticationController extends StateNotifier<LoginState> {
+class AuthenticationController extends StateNotifier<AuthenticationState> {
   final AuthenticationService _authenticationService;
-  AuthenticationController(this._authenticationService) : super(LoginInitial());
+  AuthenticationController(this._authenticationService)
+      : super(AuthenticationInitial());
 
   Future<void> login(String email, String password, context) async {
     try {
-      state = LoginLoading();
+      state = AuthenticationLoading();
       await _authenticationService.login(email, password);
-      state = LoginSuccess();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeView(),
-        ),
-      );
+      state = AuthenticationSuccess();
+
+      navigateToHome(context);
+    } on SocketException catch (e) {
+      state = AuthenticationFailure(e.toString());
+      ToastWidget(message: e.toString());
+      debugPrint(e.toString());
     } catch (e) {
-      state = LoginFailure(e.toString());
+      state = AuthenticationFailure(e.toString());
+      ToastWidget(message: e.toString());
+      debugPrint(e.toString());
+    } finally {
+      state = AuthenticationInitial();
+    }
+  }
+
+  Future<void> register(
+    String name,
+    String email,
+    String password,
+    context,
+  ) async {
+    try {
+      state = AuthenticationLoading();
+      await _authenticationService.register(name, email, password);
+      state = AuthenticationSuccess();
+
+      navigateToHome(context);
+    } on SocketException catch (e) {
+      state = AuthenticationFailure(e.toString());
+      ToastWidget(message: e.toString());
+      debugPrint(e.toString());
+    } catch (e) {
+      state = AuthenticationFailure(e.toString());
+      ToastWidget(message: e.toString());
+      debugPrint(e.toString());
+    } finally {
+      state = AuthenticationInitial();
     }
   }
 }
 
-final StateNotifierProvider<AuthenticationController, LoginState>
+Future<void> navigateToHome(BuildContext context) async {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const HomeView(),
+    ),
+  );
+}
+
+final StateNotifierProvider<AuthenticationController, AuthenticationState>
     authenticationControllerProvider =
-    StateNotifierProvider<AuthenticationController, LoginState>(
+    StateNotifierProvider<AuthenticationController, AuthenticationState>(
   (ref) {
     final AuthenticationService authenticationService =
         ref.watch(authenticationServiceProvider);

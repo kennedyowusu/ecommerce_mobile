@@ -6,6 +6,7 @@ import 'package:ecommerce_ui/widgets/ads_banner_widget.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:ecommerce_ui/widgets/card_widget.dart';
 import 'package:ecommerce_ui/widgets/chip_widget.dart';
+import 'package:ecommerce_ui/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,7 +25,7 @@ class HomeView extends ConsumerWidget {
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(itemBag: itemBag, title: 'Home'),
       ),
-      drawer: const Drawer(),
+      drawer: const AppDrawer(),
       // bottomNavigationBar: ProjectLayout(),
       body: SingleChildScrollView(
         child: Padding(
