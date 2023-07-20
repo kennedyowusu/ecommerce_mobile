@@ -33,5 +33,5 @@ class LoginFailure extends LoginState {
   final String message;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }

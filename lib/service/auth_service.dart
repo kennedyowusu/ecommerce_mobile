@@ -1,13 +1,27 @@
+import 'package:dio/dio.dart';
+import 'package:ecommerce_ui/models/user_model.dart';
+import 'package:ecommerce_ui/service/endpoint.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AuthenticationService {
-  bool isLoggedIn = false;
+  Future<UserResponseModel> login(String email, String password) async {
+    final Dio dio = Dio();
+    final GetStorage storage = GetStorage();
 
-  Future<bool> login(String email, String password) async {
-    await Future.delayed(const Duration(milliseconds: 3000), () {
-      isLoggedIn = true;
+    final response = await dio.post(loginURL, data: {
+      "email": email,
+      "password": password,
     });
-    return isLoggedIn;
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load data!');
+    } else {
+      final UserResponseModel loginResponseModel =
+          UserResponseModel.fromJson(response.data);
+      storage.write('token', loginResponseModel.token);
+      return loginResponseModel;
+    }
   }
 }
 
