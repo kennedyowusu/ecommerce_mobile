@@ -31,7 +31,7 @@ class RegistrationView extends ConsumerWidget {
             ),
             Center(
               child: Container(
-                height: MediaQueries.getHeight(context) / 2,
+                height: MediaQueries.getHeight(context) / 1.5,
                 width: double.infinity,
                 constraints: const BoxConstraints(
                   minHeight: 300,
@@ -90,7 +90,7 @@ class RegistrationView extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Don't have an Account?",
+                          "Already have an Account?",
                           style: TextStyle(color: Colors.black),
                         ),
                         SizedBox(width: 5),
@@ -104,7 +104,7 @@ class RegistrationView extends ConsumerWidget {
                             );
                           },
                           child: Text(
-                            "Sign Up",
+                            "Sign In",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
