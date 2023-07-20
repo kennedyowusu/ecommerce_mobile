@@ -4,5 +4,5 @@ const String registerURL = "${bASEURL}register";
 const String logoutURL = "${bASEURL}logout";
 const String userURL = "${bASEURL}user";
 const String productURL = "${bASEURL}products";
-const String categoryURL = "${bASEURL}categories";
+const String categoriesURL = "${bASEURL}categories";
 const String cartURL = "${bASEURL}cart";
