@@ -1,4 +1,4 @@
-class ProductModel {
+class ProductModelzzz {
   final int pid;
   final String imgUrl;
   final String title;
@@ -9,7 +9,8 @@ class ProductModel {
   final double rating;
   bool isSelected;
   int qty;
-  ProductModel({
+
+  ProductModelzzz({
     required this.pid,
     required this.imgUrl,
     required this.title,
@@ -22,7 +23,7 @@ class ProductModel {
     this.qty = 1,
   });
 
-  ProductModel copyWith({
+  ProductModelzzz copyWith({
     int? pid,
     String? imgUrl,
     String? title,
@@ -34,7 +35,7 @@ class ProductModel {
     bool? isSelected,
     int? qty,
   }) {
-    return ProductModel(
+    return ProductModelzzz(
       pid: pid ?? this.pid,
       imgUrl: imgUrl ?? this.imgUrl,
       title: title ?? this.title,

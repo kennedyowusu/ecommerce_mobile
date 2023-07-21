@@ -1,16 +1,18 @@
 import 'package:ecommerce_ui/constants/themes.dart';
+// ignore: unused_import
 import 'package:ecommerce_ui/models/product_model.dart';
+import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/views/cart.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
-    required this.itemBag,
+    required this.cartItem,
     required this.title,
   });
 
-  final List<ProductModel> itemBag;
+  final List<ProductsModel> cartItem;
   final String title;
 
   @override
@@ -30,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 20, top: 10),
           child: Badge(
-            label: Text(itemBag.length.toString()),
+            label: Text(cartItem.length.toString()),
             child: IconButton(
               onPressed: () {
                 Navigator.push(

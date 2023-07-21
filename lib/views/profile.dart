@@ -1,21 +1,22 @@
 import 'package:ecommerce_ui/constants/themes.dart';
+import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../controllers/itembag_controller.dart';
+import '../controllers/cart_items_controller.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemBag = ref.watch(itemBagProvider);
+    final List<ProductsModel> cartItem = ref.watch(itemBagProvider);
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(itemBag: itemBag, title: 'Profile'),
+        child: CustomAppBar(cartItem: cartItem, title: 'Profile'),
       ),
       drawer: const Drawer(),
       body: Column(

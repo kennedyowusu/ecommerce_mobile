@@ -1,7 +1,7 @@
 import 'package:ecommerce_ui/constants/colors.dart';
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/controllers/category_controller.dart';
-import 'package:ecommerce_ui/controllers/itembag_controller.dart';
+import 'package:ecommerce_ui/controllers/cart_items_controller.dart';
 import 'package:ecommerce_ui/controllers/product_controller.dart';
 import 'package:ecommerce_ui/models/category_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
@@ -22,8 +22,8 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productNotifierProvider);
-    final itemBag = ref.watch(itemBagProvider);
+    final AsyncValue<ProductResponseModel> products = ref.watch(productNotifierProvider);
+    final List<ProductsModel>  cartItem = ref.watch(itemBagProvider);
 
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);
@@ -36,7 +36,7 @@ class HomeView extends ConsumerWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(itemBag: itemBag, title: 'Home'),
+        child: CustomAppBar(cartItem: cartItem, title: 'Home'),
       ),
       drawer: const AppDrawer(),
       body: SingleChildScrollView(
@@ -86,14 +86,18 @@ class HomeView extends ConsumerWidget {
                 padding: const EdgeInsets.all(4),
                 width: double.infinity,
                 height: 300,
-                // child: ListView.builder(
-                //   padding: const EdgeInsets.all(4),
-                //   itemCount: 4,
-                //   scrollDirection: Axis.horizontal,
-                //   shrinkWrap: true,
-                //   itemBuilder: (context, index) =>
-                //       ProductCardWidget(productIndex: index),
-                // ),
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(4),
+                  itemCount: products.when(
+                    data: (data) => data.data.length,
+                    loading: () => 0,
+                    error: (error, stackTrace) => 0,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) =>
+                      ProductCardWidget(productIndex: index),
+                ),
               ),
               // Featured products
               Row(

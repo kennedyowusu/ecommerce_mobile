@@ -1,4 +1,4 @@
-import 'package:ecommerce_ui/controllers/itembag_controller.dart';
+import 'package:ecommerce_ui/controllers/cart_items_controller.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,11 +11,11 @@ class ProductCartView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemBag = ref.watch(itemBagProvider);
+    final cartItem = ref.watch(itemBagProvider);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(itemBag: itemBag, title: 'Cart'),
+        child: CustomAppBar(cartItem: cartItem, title: 'Cart'),
       ),
       body: Column(children: [
         Expanded(
@@ -24,7 +24,7 @@ class ProductCartView extends ConsumerWidget {
             color: kLightBackground,
             padding: const EdgeInsets.all(20),
             child: ListView.builder(
-              itemCount: itemBag.length,
+              itemCount: cartItem.length,
               itemBuilder: (context, index) => Card(
                 child: Container(
                   color: Colors.white,
@@ -32,7 +32,7 @@ class ProductCartView extends ConsumerWidget {
                   child: Row(children: [
                     Expanded(
                       flex: 1,
-                      child: Image.asset(itemBag[index].imgUrl),
+                      child: Image.asset(cartItem[index].image),
                     ),
                     Expanded(
                         flex: 3,
@@ -42,17 +42,17 @@ class ProductCartView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                itemBag[index].title,
+                                cartItem[index].name,
                                 style: AppTheme.kCardTitle,
                               ),
                               const Gap(6),
                               Text(
-                                itemBag[index].shortDescription,
+                                cartItem[index].description,
                                 style: AppTheme.kBodyText,
                               ),
                               const Gap(4),
                               Text(
-                                '\$${itemBag[index].price}',
+                                '\$${cartItem[index].price}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

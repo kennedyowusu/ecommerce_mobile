@@ -1,4 +1,4 @@
-import 'package:ecommerce_ui/models/product_model.dart';
+import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductState extends Equatable {
@@ -23,7 +23,7 @@ class ProductLoading extends ProductState {
 }
 
 class ProductSuccess extends ProductState {
-  final List<ProductModel> products;
+  final List<ProductsModel> products;
   const ProductSuccess({required this.products});
 
   @override
