@@ -1,7 +1,5 @@
 import 'package:ecommerce_ui/constants/themes.dart';
-// ignore: unused_import
-import 'package:ecommerce_ui/models/product_model.dart';
-import 'package:ecommerce_ui/models/products_model.dart';
+import 'package:ecommerce_ui/models/cart_model.dart';
 import 'package:ecommerce_ui/views/cart.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +10,7 @@ class CustomAppBar extends StatelessWidget {
     required this.title,
   });
 
-  final List<ProductsModel> cartItem;
+  final List<CartModel> cartItem;
   final String title;
 
   @override

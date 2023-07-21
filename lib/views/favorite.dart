@@ -14,7 +14,7 @@ class FavoriteView extends ConsumerWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(cartItem: cartItem, title: 'Favorite'),
+        child: CustomAppBar(cartItem: [], title: 'Favorite'),
       ),
       drawer: const Drawer(),
       body: const Center(
