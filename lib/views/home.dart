@@ -22,8 +22,9 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<ProductResponseModel> products = ref.watch(productNotifierProvider);
-    final List<ProductsModel>  cartItem = ref.watch(itemBagProvider);
+    final AsyncValue<ProductResponseModel> products =
+        ref.watch(productNotifierProvider);
+    final List<ProductsModel> cartItem = ref.watch(itemBagProvider);
 
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);
@@ -111,27 +112,31 @@ class HomeView extends ConsumerWidget {
                 ],
               ),
 
-              // MasonryGridView.builder(
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemCount: products.length,
-              //   shrinkWrap: true,
-              //   gridDelegate:
-              //       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 2,
-              //   ),
-              //   itemBuilder: (context, index) => GestureDetector(
-              //     onTap: () => Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => ProductDetailsView(getIndex: index),
-              //       ),
-              //     ),
-              //     child: SizedBox(
-              //       height: 250,
-              //       child: ProductCardWidget(productIndex: index),
-              //     ),
-              //   ),
-              // ),
+              MasonryGridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: products.when(
+                  data: (data) => data.data.length,
+                  loading: () => 0,
+                  error: (error, stackTrace) => 0,
+                ),
+                shrinkWrap: true,
+                gridDelegate:
+                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) => GestureDetector(
+                  // onTap: () => Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ProductDetailsView(getIndex: index),
+                  //   ),
+                  // ),
+                  child: SizedBox(
+                    height: 250,
+                    child: ProductCardWidget(productIndex: index),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
