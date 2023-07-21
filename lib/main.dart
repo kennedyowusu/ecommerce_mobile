@@ -1,5 +1,5 @@
+import 'package:ecommerce_ui/layout.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
-import 'package:ecommerce_ui/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,7 +28,7 @@ class Ecommerce extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: storage.hasData('token') ? const HomeView() : LoginView(),
+      home: storage.hasData('token') ? ProjectLayout() : LoginView(),
     );
   }
 }
