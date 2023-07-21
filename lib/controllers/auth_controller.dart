@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:ecommerce_ui/layout.dart';
 import 'package:ecommerce_ui/providers/states/auth_states.dart';
 import 'package:ecommerce_ui/service/auth_service.dart';
-import 'package:ecommerce_ui/views/home.dart';
 import 'package:ecommerce_ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +62,7 @@ Future<void> navigateToHome(BuildContext context) async {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => const HomeView(),
+      builder: (context) => ProjectLayout(),
     ),
   );
 }

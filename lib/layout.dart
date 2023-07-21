@@ -12,7 +12,7 @@ class ProjectLayout extends ConsumerWidget {
   final List<ConsumerWidget> screens = [
     const HomeView(),
     const FavoriteView(),
-    const ProfileView(),
+    ProfileView(),
   ];
 
   @override

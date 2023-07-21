@@ -48,7 +48,7 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        name: json["name"],
+        name: json["name"] ?? '',
         email: json["email"],
         role: json["role"],
         updatedAt: DateTime.parse(json["updated_at"]),

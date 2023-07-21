@@ -19,3 +19,8 @@ final FutureProvider<CartResponseModel> cartNotifierProvider =
     return cartService.getCartItems();
   },
 );
+
+// final cartLengthProvider = Provider<int>((ref) {
+//   final CartResponseModel cartResponseModel = ref.watch(cartNotifierProvider);
+//   return cartResponseModel.cartItems.length;
+// });

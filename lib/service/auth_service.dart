@@ -23,17 +23,22 @@ class AuthenticationService {
       final UserResponseModel loginResponseModel =
           UserResponseModel.fromJson(response.data);
       storage.write('token', loginResponseModel.token);
+      storage.write('userId', loginResponseModel.user.id);
+      storage.write('user', loginResponseModel.user);
       return loginResponseModel;
     }
   }
 
   Future<UserResponseModel> register(
       String name, String email, String password) async {
-    final response = await dio.post(registerURL, data: {
-      "name": name,
-      "email": email,
-      "password": password,
-    });
+    final response = await dio.post(
+      registerURL,
+      data: {
+        "name": name,
+        "email": email,
+        "password": password,
+      },
+    );
 
     if (response.statusCode != 201) {
       final errorMessage = response.data['message'] as String;
@@ -43,6 +48,10 @@ class AuthenticationService {
       final UserResponseModel registerResponseModel =
           UserResponseModel.fromJson(response.data);
       storage.write('token', registerResponseModel.token);
+      storage.write('userId', registerResponseModel.user.id);
+
+      // Store the user object in the local storage
+      storage.write('user', registerResponseModel.user);
       return registerResponseModel;
     }
   }

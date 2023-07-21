@@ -12,8 +12,8 @@ class CartService {
   final Dio dio = Dio();
 
   Future<CartResponseModel> getCartItems() async {
-    final String token = storage.read('token') as String;
-    final String userId = storage.read('userId') as String;
+    final String token = storage.read('token');
+    final int userId = storage.read('userId');
 
     final Response response = await dio.get(
       cartURL,
