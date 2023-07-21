@@ -1,3 +1,4 @@
+import 'package:ecommerce_ui/constants/colors.dart';
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/controllers/category_controller.dart';
 import 'package:ecommerce_ui/controllers/itembag_controller.dart';
@@ -21,8 +22,9 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productNotifierProvider);
     final itemBag = ref.watch(itemBagProvider);
-    final CategoryModel categoryController =
-        ref.watch(categoryControllerProvider);
+
+    final AsyncValue<CategoryModel> categoryController =
+        ref.watch(categoryNotifierProvider);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -41,13 +43,21 @@ class HomeView extends ConsumerWidget {
               Gap(MediaQueries.isPortrait(context) ? 5 : 40),
               SizedBox(
                 height: 50,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: categoryController.data.length,
-                  itemBuilder: (context, index) => ChipWidget(
-                    chipLabel: categoryController.data[index].name,
+                child: categoryController.when(
+                  data: (data) => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: data.data.length,
+                    itemBuilder: (context, index) => ChipWidget(
+                      chipLabel: data.data[index].name,
+                    ),
                   ),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(
+                      color: deepBlue,
+                    ),
+                  ),
+                  error: (error, stackTrace) => Text(error.toString()),
                 ),
               ),
               // Hot sales section
