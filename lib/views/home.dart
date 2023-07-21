@@ -24,8 +24,6 @@ class HomeView extends ConsumerWidget {
     final CategoryModel categoryController =
         ref.watch(categoryControllerProvider);
 
-    // debugPrint(categoryController.data.length.toString());
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
@@ -51,22 +49,6 @@ class HomeView extends ConsumerWidget {
                     chipLabel: categoryController.data[index].name,
                   ),
                 ),
-                //   child: categoryController.when(
-                //     data: (data) => ListView.builder(
-                //       scrollDirection: Axis.horizontal,
-                //       shrinkWrap: true,
-                //       itemCount: data.data.length,
-                //       itemBuilder: (context, index) => ChipWidget(
-                //         chipLabel: data.data[index].name,
-                //       ),
-                //     ),
-                //     loading: () => const Center(
-                //       child: CircularProgressIndicator(),
-                //     ),
-                //     error: (error, stackTrace) => const Center(
-                //       child: Text('Error'),
-                //     ),
-                //   ),
               ),
               // Hot sales section
               Gap(
