@@ -1,6 +1,8 @@
 import 'package:ecommerce_ui/constants/themes.dart';
+import 'package:ecommerce_ui/controllers/category_controller.dart';
 import 'package:ecommerce_ui/controllers/itembag_controller.dart';
 import 'package:ecommerce_ui/controllers/product_controller.dart';
+import 'package:ecommerce_ui/models/category_model.dart';
 import 'package:ecommerce_ui/views/detail.dart';
 import 'package:ecommerce_ui/widgets/ads_banner_widget.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
@@ -19,6 +21,10 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productNotifierProvider);
     final itemBag = ref.watch(itemBagProvider);
+    final CategoryModel categoryController =
+        ref.watch(categoryControllerProvider);
+
+    // debugPrint(categoryController.data.length.toString());
 
     return Scaffold(
       appBar: PreferredSize(
@@ -26,7 +32,6 @@ class HomeView extends ConsumerWidget {
         child: CustomAppBar(itemBag: itemBag, title: 'Home'),
       ),
       drawer: const AppDrawer(),
-      // bottomNavigationBar: ProjectLayout(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(
@@ -38,18 +43,30 @@ class HomeView extends ConsumerWidget {
               Gap(MediaQueries.isPortrait(context) ? 5 : 40),
               SizedBox(
                 height: 50,
-                child: ListView(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  children: const [
-                    ChipWidget(chipLabel: 'All'),
-                    ChipWidget(chipLabel: 'Iphone X'),
-                    ChipWidget(chipLabel: 'Iphone 11'),
-                    ChipWidget(chipLabel: 'Iphone 12'),
-                    ChipWidget(chipLabel: 'Iphone 13'),
-                    ChipWidget(chipLabel: 'Iphone 14'),
-                  ],
+                  itemCount: categoryController.data.length,
+                  itemBuilder: (context, index) => ChipWidget(
+                    chipLabel: categoryController.data[index].name,
+                  ),
                 ),
+                //   child: categoryController.when(
+                //     data: (data) => ListView.builder(
+                //       scrollDirection: Axis.horizontal,
+                //       shrinkWrap: true,
+                //       itemCount: data.data.length,
+                //       itemBuilder: (context, index) => ChipWidget(
+                //         chipLabel: data.data[index].name,
+                //       ),
+                //     ),
+                //     loading: () => const Center(
+                //       child: CircularProgressIndicator(),
+                //     ),
+                //     error: (error, stackTrace) => const Center(
+                //       child: Text('Error'),
+                //     ),
+                //   ),
               ),
               // Hot sales section
               Gap(

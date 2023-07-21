@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_ui/models/category_model.dart';
 import 'package:ecommerce_ui/service/endpoint.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 
 class CategoryService {
@@ -26,7 +27,15 @@ class CategoryService {
       throw Exception(errorMessage);
     } else {
       final CategoryModel categoryModel = CategoryModel.fromJson(response.data);
+      debugPrint(categoryModel.toString());
       return categoryModel;
     }
   }
 }
+
+final Provider<CategoryService> categoryServiceProvider =
+    Provider<CategoryService>(
+  (ref) {
+    return CategoryService();
+  },
+);
