@@ -1,7 +1,7 @@
 import 'package:ecommerce_ui/constants/colors.dart';
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/controllers/auth_controller.dart';
-import 'package:ecommerce_ui/providers/states/auth_states.dart';
+import 'package:ecommerce_ui/providers/states/data_fetching_states.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:ecommerce_ui/widgets/auth_button.dart';
 import 'package:ecommerce_ui/widgets/input_field.dart';
@@ -17,8 +17,7 @@ class RegistrationView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AuthenticationState state =
-        ref.watch(authenticationControllerProvider);
+    final DataFetchingState state = ref.watch(authenticationControllerProvider);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -90,7 +89,7 @@ class RegistrationView extends ConsumerWidget {
                     SizedBox(height: 5),
                     InputField(controller: passwordController),
                     SizedBox(height: 20),
-                    state is AuthenticationLoading
+                    state is DataFetchingLoading
                         ? const Center(
                             child: CircularProgressIndicator(
                               color: deepBlue,
