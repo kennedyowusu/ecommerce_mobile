@@ -4,6 +4,8 @@ import 'package:ecommerce_ui/controllers/category_controller.dart';
 import 'package:ecommerce_ui/controllers/itembag_controller.dart';
 import 'package:ecommerce_ui/controllers/product_controller.dart';
 import 'package:ecommerce_ui/models/category_model.dart';
+import 'package:ecommerce_ui/models/products_model.dart';
+import 'package:ecommerce_ui/providers/providers.dart';
 import 'package:ecommerce_ui/views/detail.dart';
 import 'package:ecommerce_ui/widgets/ads_banner_widget.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
@@ -25,6 +27,11 @@ class HomeView extends ConsumerWidget {
 
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);
+
+    final AsyncValue<ProductResponseModel> productController =
+        ref.watch(productNotifierProvider);
+
+    debugPrint('productController: $productController');
 
     return Scaffold(
       appBar: PreferredSize(
@@ -79,14 +86,14 @@ class HomeView extends ConsumerWidget {
                 padding: const EdgeInsets.all(4),
                 width: double.infinity,
                 height: 300,
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(4),
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) =>
-                      ProductCardWidget(productIndex: index),
-                ),
+                // child: ListView.builder(
+                //   padding: const EdgeInsets.all(4),
+                //   itemCount: 4,
+                //   scrollDirection: Axis.horizontal,
+                //   shrinkWrap: true,
+                //   itemBuilder: (context, index) =>
+                //       ProductCardWidget(productIndex: index),
+                // ),
               ),
               // Featured products
               Row(
@@ -100,27 +107,27 @@ class HomeView extends ConsumerWidget {
                 ],
               ),
 
-              MasonryGridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length,
-                shrinkWrap: true,
-                gridDelegate:
-                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProductDetailsView(getIndex: index),
-                    ),
-                  ),
-                  child: SizedBox(
-                    height: 250,
-                    child: ProductCardWidget(productIndex: index),
-                  ),
-                ),
-              ),
+              // MasonryGridView.builder(
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemCount: products.length,
+              //   shrinkWrap: true,
+              //   gridDelegate:
+              //       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //   ),
+              //   itemBuilder: (context, index) => GestureDetector(
+              //     onTap: () => Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => ProductDetailsView(getIndex: index),
+              //       ),
+              //     ),
+              //     child: SizedBox(
+              //       height: 250,
+              //       child: ProductCardWidget(productIndex: index),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

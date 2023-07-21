@@ -1,26 +1,27 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:ecommerce_ui/models/category_model.dart';
+import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/service/endpoint.dart';
-import 'package:ecommerce_ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 
-class CategoryService {
+class ProductService {
   final GetStorage storage = GetStorage();
   final Dio dio = Dio();
 
-  Future<CategoryModel> fetchCategories() async {
+  Future<ProductResponseModel> fetchProducts() async {
     final token = storage.read('token');
 
     if (token == null) {
       throw Exception('Token is null');
+    } else {
+      debugPrint(token);
     }
 
     final response = await dio.get(
-      categoriesURL,
+      productURL,
       options: Options(
         headers: {
           'Authorization': 'Bearer $token',
@@ -30,20 +31,21 @@ class CategoryService {
       ),
     );
 
+    debugPrint(response.data['data'].toString());
+
     if (response.statusCode != 200) {
       final errorMessage = response.data['message'];
       debugPrint(errorMessage);
-      ToastWidget(message: errorMessage);
       throw Exception(errorMessage);
     } else {
-      return categoryModelFromJson(json.encode(response.data));
+      return productModelFromJson(json.encode(response.data));
     }
   }
 }
 
-final Provider<CategoryService> categoryServiceProvider =
-    Provider<CategoryService>(
+final Provider<ProductService> productServiceProvider =
+    Provider<ProductService>(
   (ref) {
-    return CategoryService();
+    return ProductService();
   },
 );

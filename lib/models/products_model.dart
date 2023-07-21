@@ -30,7 +30,7 @@ class ProductsModel {
   String image;
   String description;
   String price;
-  String categoryId;
+  int categoryId;
   int availability;
   DateTime createdAt;
   DateTime updatedAt;
@@ -53,7 +53,7 @@ class ProductsModel {
         image: json["image"],
         description: json["description"],
         price: json["price"],
-        categoryId: json["category_id"] as String,
+        categoryId: json["category_id"],
         availability: json["availability"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

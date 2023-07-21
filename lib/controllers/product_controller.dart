@@ -36,8 +36,8 @@ class ProductNotifier extends StateNotifier<List<ProductModel>> {
   }
 }
 
-final StateNotifierProvider<ProductNotifier, List<ProductModel>>
-    productNotifierProvider =
-    StateNotifierProvider<ProductNotifier, List<ProductModel>>((ref) {
-  return ProductNotifier();
-});
+// final StateNotifierProvider<ProductNotifier, List<ProductModel>>
+//     productNotifierProvider =
+//     StateNotifierProvider<ProductNotifier, List<ProductModel>>((ref) {
+//   return ProductNotifier();
+// });
