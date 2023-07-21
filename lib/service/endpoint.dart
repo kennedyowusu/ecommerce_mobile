@@ -5,4 +5,4 @@ const String logoutURL = "${bASEURL}logout";
 const String userURL = "${bASEURL}user";
 const String productURL = "${bASEURL}products";
 const String categoriesURL = "${bASEURL}categories";
-const String cartURL = "${bASEURL}cart";
+const String cartURL = "${bASEURL}cart-items";
