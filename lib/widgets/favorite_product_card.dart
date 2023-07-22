@@ -1,5 +1,4 @@
 import 'package:ecommerce_ui/constants/themes.dart';
-import 'package:ecommerce_ui/models/favorite_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
 import 'package:flutter/material.dart';
