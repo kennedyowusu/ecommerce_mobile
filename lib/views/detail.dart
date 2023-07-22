@@ -18,7 +18,6 @@ class ProductDetailsView extends ConsumerWidget {
     final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
 
-    debugPrint("product: $productController");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
@@ -27,124 +26,135 @@ class ProductDetailsView extends ConsumerWidget {
           title: 'Product Details',
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 300,
-              width: double.infinity,
-              padding: const EdgeInsets.all(42),
-              color: kLightBackground,
-              child: productController.when(
-                data: (data) => data.data[getIndex].image == null
-                    ? Image.asset(
-                        'assets/products/I1.png',
-                        fit: BoxFit.contain,
-                        height: 300,
-                        width: 300,
-                      )
-                    : Image.network(
-                        data.data[getIndex].image,
-                        fit: BoxFit.contain,
-                        height: 300,
-                        width: 300,
-                      ),
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 300,
+                width: double.infinity,
+                padding: const EdgeInsets.all(42),
+                color: kLightBackground,
+                child: productController.when(
+                  data: (data) => data.data[getIndex].image == null
+                      ? Image.asset(
+                          'assets/products/I1.png',
+                          fit: BoxFit.contain,
+                          height: 300,
+                          width: 300,
+                        )
+                      : Image.network(
+                          data.data[getIndex].image,
+                          fit: BoxFit.contain,
+                          height: 300,
+                          width: 300,
+                        ),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  error: (e, s) => Text(e.toString()),
                 ),
-                error: (e, s) => Text(e.toString()),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  productController.when(
-                    data: (data) => Text(
-                      data.data[getIndex].name,
-                      style: AppTheme.kBigTitle.copyWith(color: kPrimaryColor),
-                    ),
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    error: (e, s) => Text(e.toString()),
-                  ),
-                  const Gap(12),
-                  Row(
-                    children: [
-                      RatingBar(
-                        itemSize: 20,
-                        initialRating: 1,
-                        minRating: 1,
-                        maxRating: 5,
-                        allowHalfRating: true,
-                        ratingWidget: RatingWidget(
-                          empty: const Icon(
-                            Icons.star_border,
-                            color: Colors.amber,
+              Container(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        productController.when(
+                          data: (data) => Text(
+                            data.data[getIndex].name,
+                            style: AppTheme.kCardTitle
+                                .copyWith(color: kPrimaryColor),
                           ),
-                          full: const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          half: const Icon(
-                            Icons.star_half_sharp,
-                            color: Colors.amber,
+                          error: (e, s) => Text(e.toString()),
+                        ),
+                        productController.when(
+                          data: (data) => Text(
+                            "\$${data.data[getIndex].price}",
+                            style: AppTheme.kCardTitle.copyWith(fontSize: 16),
                           ),
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          error: (e, s) => Text(e.toString()),
                         ),
-                        // ignore: avoid_returning_null_for_void
-                        onRatingUpdate: (value) => null,
-                      ),
-                      const Gap(12),
-                      const Text('125 review')
-                    ],
-                  ),
-                  const Gap(8),
-                  productController.when(
-                    data: (data) => Text(
-                      data.data[getIndex].description,
-                      style: AppTheme.kCardTitle.copyWith(fontSize: 18),
+                      ],
                     ),
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    error: (e, s) => Text(e.toString()),
-                  ),
-                  const Gap(8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      productController.when(
-                        data: (data) => Text(
-                          "\$${data.data[getIndex].price}",
-                          style: AppTheme.kCardTitle.copyWith(fontSize: 24),
+                    const Gap(12),
+                    Row(
+                      children: [
+                        RatingBar(
+                          itemSize: 20,
+                          initialRating: 1,
+                          minRating: 1,
+                          maxRating: 5,
+                          allowHalfRating: true,
+                          ratingWidget: RatingWidget(
+                            empty: const Icon(
+                              Icons.star_border,
+                              color: Colors.amber,
+                            ),
+                            full: const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            half: const Icon(
+                              Icons.star_half_sharp,
+                              color: Colors.amber,
+                            ),
+                          ),
+                          // ignore: avoid_returning_null_for_void
+                          onRatingUpdate: (value) => null,
                         ),
-                        loading: () => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        error: (e, s) => Text(e.toString()),
-                      ),
-                    ],
-                  ),
-                  const Gap(8),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: kPrimaryColor,
-                        minimumSize: const Size(double.infinity, 50)),
-                    onPressed: () {},
-                    child: Text(
-                      'Add Item to Cart',
-                      style: AppTheme.kCardTitle.copyWith(
-                        color: Colors.white,
-                      ),
+                        const Gap(12),
+                        const Text('125 review')
+                      ],
                     ),
-                  ),
-                ],
+                    const Gap(8),
+                    productController.when(
+                      data: (data) => Text(
+                        data.data[getIndex].description,
+                        style: AppTheme.kCardTitle.copyWith(fontSize: 18),
+                      ),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      error: (e, s) => Text(e.toString()),
+                    ),
+                    const Gap(8),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: Container(
+        height: 60,
+        width: double.infinity,
+        margin: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kPrimaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-          ],
+          ),
+          onPressed: () {},
+          child: const Text(
+            'Add to Favorite',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
