@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_ui/models/cart_model.dart';
 import 'package:ecommerce_ui/service/endpoint.dart';
 import 'package:ecommerce_ui/widgets/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 

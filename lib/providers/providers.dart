@@ -1,6 +1,8 @@
 import 'package:ecommerce_ui/models/cart_model.dart';
+import 'package:ecommerce_ui/models/favorite_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/service/cart_service.dart';
+import 'package:ecommerce_ui/service/favorite_service.dart';
 import 'package:ecommerce_ui/service/product_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,5 +19,13 @@ final FutureProvider<CartResponseModel> cartNotifierProvider =
   (ref) async {
     final CartService cartService = ref.watch(cartServiceProvider);
     return cartService.getCartItems();
+  },
+);
+
+final FutureProvider<FavoriteResponseModel> favoriteNotifierProvider =
+    FutureProvider<FavoriteResponseModel>(
+  (ref) async {
+    final FavoriteService favoriteService = ref.watch(favoriteServiceProvider);
+    return favoriteService.getFavoriteList();
   },
 );
