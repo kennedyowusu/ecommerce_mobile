@@ -1,4 +1,3 @@
-import 'package:ecommerce_ui/controllers/cart_items_controller.dart';
 import 'package:ecommerce_ui/models/cart_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
@@ -28,56 +27,57 @@ class ProductCartView extends ConsumerWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              color: kLightBackground,
-              child: ListView.builder(
-                itemCount: cartItem.when(
-                  data: (data) => data.data.length,
-                  error: (error, stackTrace) => 0,
-                  loading: () => 0,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: kLightBackground,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                itemBuilder: (context, index) => Card(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    width: double.infinity,
-                    child: ListTile(
-                      leading: Image.network(
-                        productController.when(
-                          data: (data) => data.data[index].image,
-                          error: (error, stackTrace) => '',
-                          loading: () => '',
+                child: ListView.builder(
+                  itemCount: cartItem.when(
+                    data: (data) => data.data.length,
+                    error: (error, stackTrace) => 0,
+                    loading: () => 0,
+                  ),
+                  itemBuilder: (context, index) => Card(
+                    child: Container(
+                      height: MediaQueries.getHeight(context) * 0.12,
+                      padding: const EdgeInsets.all(12),
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      child: ListTile(
+                        leading: Image.network(
+                          productController.when(
+                            data: (data) => data.data[index].image,
+                            error: (error, stackTrace) => '',
+                            loading: () => '',
+                          ),
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
+                          scale: 0.5,
                         ),
-                      ),
-                      title: Text(
-                        productController.when(
-                          data: (data) => data.data[index].name,
-                          error: (error, stackTrace) => '',
-                          loading: () => '',
+                        title: Text(
+                          productController.when(
+                            data: (data) => data.data[index].name,
+                            error: (error, stackTrace) => '',
+                            loading: () => '',
+                          ),
+                          style: AppTheme.kCardTitle,
                         ),
-                        style: AppTheme.kCardTitle,
-                      ),
-                      // subtitle: Text(
-                      //   productController.when(
-                      //     data: (data) => data.data[index].description,
-                      //     error: (error, stackTrace) => '',
-                      //     loading: () => '',
-                      //   ),
-                      //   style: AppTheme.kBodyText,
-                      // ),
-                      trailing: Text(
-                        '\$${productController.when(
-                          data: (data) => data.data[index].price,
-                          error: (error, stackTrace) => '',
-                          loading: () => '',
-                        )}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                        trailing: Text(
+                          '\$${productController.when(
+                            data: (data) => data.data[index].price,
+                            error: (error, stackTrace) => '',
+                            loading: () => '',
+                          )}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -85,8 +85,7 @@ class ProductCartView extends ConsumerWidget {
                 ),
               ),
             ),
-          ),
-          Expanded(
+            Expanded(
               flex: 1,
               child: Container(
                 padding: const EdgeInsets.all(12),
@@ -97,7 +96,7 @@ class ProductCartView extends ConsumerWidget {
                     const Gap(12),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
-                      height: 60,
+                      height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
@@ -109,7 +108,7 @@ class ProductCartView extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            'FDS2023',
+                            'FDN2023',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -123,7 +122,11 @@ class ProductCartView extends ConsumerWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               Gap(5),
-                              Icon(Icons.check_circle)
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20,
+                              )
                             ],
                           ),
                         ],
@@ -139,12 +142,13 @@ class ProductCartView extends ConsumerWidget {
                               fontSize: 18, fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          'Free',
+                          '\$${5}',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
+                    Gap(15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
@@ -154,13 +158,19 @@ class ProductCartView extends ConsumerWidget {
                               fontSize: 18, fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          'No discount',
+                          '\$${1}',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
-                    const Divider(),
+                    const Divider(
+                      thickness: 1,
+                      height: 30,
+                      endIndent: 20,
+                      indent: 20,
+                      color: kPrimaryColor,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -171,19 +181,21 @@ class ProductCartView extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: kPrimaryColor),
                         ),
-                        Text(
-                          '\$${ref.watch(priceCalcProvider)}',
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryColor),
-                        ),
+                        // Text(
+                        //   '\$${ref.watch(priceCalcProvider)}',
+                        //   style: const TextStyle(
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: kPrimaryColor),
+                        // ),
                       ],
                     ),
                   ],
                 ),
-              ))
-        ]),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

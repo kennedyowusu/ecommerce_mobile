@@ -1,6 +1,5 @@
 import 'package:ecommerce_ui/constants/colors.dart';
 import 'package:ecommerce_ui/constants/themes.dart';
-import 'package:ecommerce_ui/controllers/category_controller.dart';
 import 'package:ecommerce_ui/models/category_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
