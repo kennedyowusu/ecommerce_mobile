@@ -1,13 +1,9 @@
 import 'package:ecommerce_ui/constants/colors.dart';
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/controllers/category_controller.dart';
-import 'package:ecommerce_ui/controllers/cart_items_controller.dart';
-import 'package:ecommerce_ui/controllers/product_controller.dart';
 import 'package:ecommerce_ui/models/category_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
-import 'package:ecommerce_ui/models/user_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
-import 'package:ecommerce_ui/views/detail.dart';
 import 'package:ecommerce_ui/widgets/ads_banner_widget.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:ecommerce_ui/widgets/card_widget.dart';

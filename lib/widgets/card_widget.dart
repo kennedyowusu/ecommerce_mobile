@@ -81,7 +81,7 @@ class ProductCardWidget extends ConsumerWidget {
                   children: [
                     Text(
                       product.when(
-                        data: (data) => data.data[productIndex].price,
+                        data: (data) => '\$${data.data[productIndex].price}',
                         loading: () => "Loading...",
                         error: (e, s) => 'Error: $e',
                       ),
@@ -90,7 +90,7 @@ class ProductCardWidget extends ConsumerWidget {
                     IconButton(
                       // onPressed: () {},
                       icon: Icon(
-                        Icons.add_circle,
+                        Icons.shopping_cart_outlined,
                         size: 30,
                       ),
                       onPressed: () {
