@@ -118,7 +118,6 @@ class ProductDetailsView extends ConsumerWidget {
                               color: Colors.amber,
                             ),
                           ),
-                          // ignore: avoid_returning_null_for_void
                           onRatingUpdate: (value) => null,
                         ),
                         const Gap(12),
