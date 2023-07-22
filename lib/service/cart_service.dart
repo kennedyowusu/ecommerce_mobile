@@ -30,11 +30,8 @@ class CartService {
       },
     );
 
-    debugPrint("Cart Response: ${response.data}");
-
     if (response.statusCode != 200) {
       final String errorMessage = response.data['message'];
-      debugPrint(errorMessage);
       throw Exception(errorMessage);
     } else {
       return cartModelFromJson(json.encode(response.data));
@@ -73,15 +70,12 @@ class CartService {
 
       if (response.statusCode != 201) {
         final String errorMessage = response.data['message'];
-        debugPrint(errorMessage);
         ToastWidget(message: errorMessage);
         throw Exception(errorMessage);
       } else {
-        debugPrint("Add To Cart Response: ${response.data}");
         ToastWidget(message: 'Product added to cart successfully');
       }
     } on DioException catch (e) {
-      debugPrint(e.message);
       throw Exception(e.message);
     }
   }

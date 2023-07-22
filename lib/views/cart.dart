@@ -20,8 +20,6 @@ class ProductCartView extends ConsumerWidget {
     final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
 
-    debugPrint('Items in cart: $cartItem');
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),

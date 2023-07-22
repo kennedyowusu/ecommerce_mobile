@@ -32,7 +32,6 @@ class CategoryService {
 
     if (response.statusCode != 200) {
       final errorMessage = response.data['message'];
-      debugPrint(errorMessage);
       ToastWidget(message: errorMessage);
       throw Exception(errorMessage);
     } else {

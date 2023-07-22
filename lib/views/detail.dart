@@ -1,3 +1,5 @@
+import 'package:ecommerce_ui/models/products_model.dart';
+import 'package:ecommerce_ui/providers/providers.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -13,7 +15,10 @@ class ProductDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final List<ProductModel> product = ref.watch(productNotifierProvider);
+    final AsyncValue<ProductResponseModel> product =
+        ref.watch(productNotifierProvider);
+
+    debugPrint("product: $product");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),

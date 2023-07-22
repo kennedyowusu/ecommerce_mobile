@@ -31,11 +31,8 @@ class ProductService {
       ),
     );
 
-    debugPrint(response.data['data'].toString());
-
     if (response.statusCode != 200) {
       final errorMessage = response.data['message'];
-      debugPrint(errorMessage);
       throw Exception(errorMessage);
     } else {
       return productModelFromJson(json.encode(response.data));
