@@ -1,9 +1,11 @@
 import 'package:ecommerce_ui/constants/themes.dart';
 import 'package:ecommerce_ui/models/cart_model.dart';
+import 'package:ecommerce_ui/providers/providers.dart';
 import 'package:ecommerce_ui/views/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends ConsumerWidget {
   CustomAppBar({
     super.key,
     required this.cartItem,
@@ -16,7 +18,9 @@ class CustomAppBar extends StatelessWidget {
   final IconButton? icon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<CartResponseModel> cartItem =
+        ref.watch(cartNotifierProvider);
     return AppBar(
       backgroundColor: kSecondaryColor,
       centerTitle: true,
@@ -32,7 +36,18 @@ class CustomAppBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 20, top: 10),
           child: Badge(
-            label: Text(cartItem.length.toString()),
+            label: Text(
+              cartItem.when(
+                data: (data) => data.data.length.toString(),
+                loading: () => '0',
+                error: (e, s) => '0',
+              ),
+              style: const TextStyle(
+                color: kWhiteColor,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             child: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -45,6 +60,7 @@ class CustomAppBar extends StatelessWidget {
               icon: const Icon(
                 Icons.local_mall,
                 size: 24,
+                color: kWhiteColor,
               ),
             ),
           ),

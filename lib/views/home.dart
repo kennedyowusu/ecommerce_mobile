@@ -22,15 +22,12 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<ProductResponseModel> products =
         ref.watch(productNotifierProvider);
-    final cartItem = ref.watch(cartNotifierProvider);
 
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);
 
     final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
-
-    debugPrint("product from home page: $productController");
 
     return Scaffold(
       appBar: PreferredSize(

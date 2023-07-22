@@ -26,7 +26,7 @@ class Ecommerce extends ConsumerWidget {
       title: title,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.blue,
       ),
       home: storage.hasData('token') ? ProjectLayout() : LoginView(),
     );
