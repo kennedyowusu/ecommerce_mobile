@@ -1,18 +1,23 @@
 import 'package:ecommerce_ui/models/favorite_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
+import 'package:ecommerce_ui/providers/states/favorite_state_notifier.dart';
+import 'package:ecommerce_ui/service/favorite_service.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../constants/themes.dart';
 
 class ProductDetailsView extends ConsumerWidget {
-  const ProductDetailsView({super.key, required this.getIndex});
+  ProductDetailsView({super.key, required this.getIndex});
 
   final int getIndex;
+  final GetStorage storage = GetStorage();
+  final FavoriteService cartService = FavoriteService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +27,16 @@ class ProductDetailsView extends ConsumerWidget {
     final AsyncValue<FavoriteResponseModel> favoriteController =
         ref.watch(favoriteNotifierProvider);
 
+    final List<FavoriteModel> favorite =
+        ref.watch(favoriteStateNotifierProvider);
+
     debugPrint("$favoriteController");
+
+    final int productId = productController.when(
+      data: (data) => data.data[getIndex].id,
+      loading: () => 0,
+      error: (e, s) => 0,
+    );
 
     return Scaffold(
       appBar: PreferredSize(
@@ -153,7 +167,27 @@ class ProductDetailsView extends ConsumerWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            final int userId = storage.read("userId");
+
+            final int productId = favoriteController.when(
+              data: (data) => data.data[getIndex].id,
+              loading: () => 0,
+              error: (e, s) => 0,
+            );
+
+            cartService.addToFavorite(userId, productId);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Added to Favorite'),
+              ),
+            );
+
+            debugPrint(
+              "Favorite Length: ${ref.watch(favoriteStateNotifierProvider).length}",
+            );
+          },
           child: const Text(
             'Add to Favorite',
             style: TextStyle(

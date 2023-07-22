@@ -8,3 +8,4 @@ const String categoriesURL = "${baseUrl}categories";
 const String cartURL = "${baseUrl}cart-items";
 const String createCartUrl = "${baseUrl}cart-item";
 const String favoriteUrl = "${baseUrl}favorites";
+const String createFavoriteUrl = "${baseUrl}favorite";

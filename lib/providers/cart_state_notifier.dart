@@ -5,7 +5,7 @@ class CartStateNotifier extends StateNotifier<List<CartModel>> {
   CartStateNotifier() : super([]);
 
   void addProductToCart(CartModel cartModel) {
-    final existingProductIndex = state.indexWhere(
+    final int existingProductIndex = state.indexWhere(
       (element) => element.productId == cartModel.productId,
     );
 
