@@ -3,6 +3,7 @@ import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/models/user_model.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
+import 'package:ecommerce_ui/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,7 +26,7 @@ class ProfileView extends ConsumerWidget {
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(cartItem: [], title: 'Profile'),
       ),
-      drawer: const Drawer(),
+      drawer: const AppDrawer(),
       body: Column(
         children: [
           Expanded(
