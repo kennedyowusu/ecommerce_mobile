@@ -30,10 +30,15 @@ class HomeView extends ConsumerWidget {
     final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
 
+    debugPrint("product from home page: $productController");
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(cartItem: [], title: 'Home'),
+        child: CustomAppBar(
+          cartItem: [],
+          title: 'Home',
+        ),
       ),
       drawer: const AppDrawer(),
       body: SafeArea(

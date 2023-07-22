@@ -15,14 +15,17 @@ class ProductDetailsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<ProductResponseModel> product =
+    final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
 
-    debugPrint("product: $product");
+    debugPrint("product: $productController");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(cartItem: [], title: 'Product Details'),
+        child: CustomAppBar(
+          cartItem: [],
+          title: 'Product Details',
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -33,11 +36,24 @@ class ProductDetailsView extends ConsumerWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(42),
               color: kLightBackground,
-              child: Image.asset(
-                "assets/products/I1.png",
-                fit: BoxFit.cover,
-                height: 200,
-                width: 200,
+              child: productController.when(
+                data: (data) => data.data[getIndex].image == null
+                    ? Image.asset(
+                        'assets/products/I1.png',
+                        fit: BoxFit.contain,
+                        height: 300,
+                        width: 300,
+                      )
+                    : Image.network(
+                        data.data[getIndex].image,
+                        fit: BoxFit.contain,
+                        height: 300,
+                        width: 300,
+                      ),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: (e, s) => Text(e.toString()),
               ),
             ),
             Container(
@@ -45,9 +61,15 @@ class ProductDetailsView extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Product Name",
-                    style: AppTheme.kBigTitle.copyWith(color: kPrimaryColor),
+                  productController.when(
+                    data: (data) => Text(
+                      data.data[getIndex].name,
+                      style: AppTheme.kBigTitle.copyWith(color: kPrimaryColor),
+                    ),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (e, s) => Text(e.toString()),
                   ),
                   const Gap(12),
                   Row(
@@ -80,42 +102,30 @@ class ProductDetailsView extends ConsumerWidget {
                     ],
                   ),
                   const Gap(8),
-                  Text("description" * 1),
+                  productController.when(
+                    data: (data) => Text(
+                      data.data[getIndex].description,
+                      style: AppTheme.kCardTitle.copyWith(fontSize: 18),
+                    ),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (e, s) => Text(e.toString()),
+                  ),
                   const Gap(8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Price',
-                        style: AppTheme.kHeadingOne,
-                      ),
-                      Row(children: [
-                        IconButton(
-                          onPressed: () {
-                            // ref
-                            //     .read(productNotifierProvider.notifier)
-                            //     .decreaseQty(product[getIndex].pid);
-                          },
-                          icon: const Icon(
-                            Icons.do_not_disturb_on_outlined,
-                            size: 30,
-                          ),
-                        ),
-                        Text(
-                          "Quantity",
+                      productController.when(
+                        data: (data) => Text(
+                          "\$${data.data[getIndex].price}",
                           style: AppTheme.kCardTitle.copyWith(fontSize: 24),
                         ),
-                        IconButton(
-                            onPressed: () {
-                              // ref
-                              //     .read(productNotifierProvider.notifier)
-                              //     .incrementQty(product[getIndex].pid);
-                            },
-                            icon: const Icon(
-                              Icons.add_circle_outline,
-                              size: 30,
-                            ))
-                      ]),
+                        loading: () => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        error: (e, s) => Text(e.toString()),
+                      ),
                     ],
                   ),
                   const Gap(8),

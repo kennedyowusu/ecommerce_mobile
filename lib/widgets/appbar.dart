@@ -4,14 +4,16 @@ import 'package:ecommerce_ui/views/cart.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
+  CustomAppBar({
     super.key,
     required this.cartItem,
     required this.title,
+    this.icon,
   });
 
   final List<CartModel> cartItem;
   final String title;
+  final IconButton? icon;
 
   @override
   Widget build(BuildContext context) {
