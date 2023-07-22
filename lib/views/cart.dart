@@ -47,15 +47,13 @@ class ProductCartView extends ConsumerWidget {
                     ),
                     width: double.infinity,
                     child: ListTile(
-                      // leading: Image.network(
-                      //   productController.when(
-                      //     data: (data) => data.data[index].image,
-                      //     error: (error, stackTrace) => '',
-                      //     loading: () => '',
-                      //   ),
-                      // ),
-
-                      leading: Icon(Icons.image),
+                      leading: Image.network(
+                        productController.when(
+                          data: (data) => data.data[index].image,
+                          error: (error, stackTrace) => '',
+                          loading: () => '',
+                        ),
+                      ),
                       title: Text(
                         productController.when(
                           data: (data) => data.data[index].name,
