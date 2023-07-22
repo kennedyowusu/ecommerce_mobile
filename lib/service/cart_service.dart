@@ -46,7 +46,7 @@ class CartService {
     int userId,
     int productId,
     int quantity,
-    int productPrice,
+    double productPrice,
   ) async {
     final String token = storage.read('token');
     final int userId = storage.read('userId');
@@ -60,7 +60,7 @@ class CartService {
 
     try {
       final Response response = await dio.post(
-        cartURL,
+        createCartUrl,
         data: json.encode(cartData),
         options: Options(
           headers: {
@@ -82,7 +82,7 @@ class CartService {
       }
     } on DioException catch (e) {
       debugPrint(e.message);
-      rethrow;
+      throw Exception(e.message);
     }
   }
 }
@@ -92,9 +92,3 @@ final Provider<CartService> cartServiceProvider = Provider<CartService>(
     return CartService();
   },
 );
-
-// final FutureProvider<CartResponseModel> cartItemsProvider =
-//     FutureProvider<CartResponseModel>((ref) async {
-//   final CartService cartService = ref.watch(cartServiceProvider);
-//   return cartService.getCartItems();
-// });

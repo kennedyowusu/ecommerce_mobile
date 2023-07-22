@@ -19,27 +19,3 @@ final FutureProvider<CartResponseModel> cartNotifierProvider =
     return cartService.getCartItems();
   },
 );
-
-// final cartLengthProvider = Provider<int>((ref) {
-//   final CartResponseModel cartResponseModel = ref.watch(cartNotifierProvider);
-//   return cartResponseModel.cartItems.length;
-// });
-
-// final cartLengthProvider = Provider<int>((ref) {
-//   final CartResponseModel cartResponseModel = ref.watch(cartNotifierProvider);
-//   return cartResponseModel.cartItems.length;
-// });
-
-// final cartTotalProvider = Provider<int>((ref) {
-//   final CartResponseModel cartResponseModel = ref.watch(cartNotifierProvider);
-//   int total = 0;
-//   cartResponseModel.cartItems.forEach((element) {
-//     total += element.totalPrice;
-//   });
-//   return total;
-// });
-
-// final cartItemProvider = Provider<CartItem>((ref) {
-//   final CartResponseModel cartResponseModel = ref.watch(cartNotifierProvider);
-//   return cartResponseModel.cartItems[0];
-// });

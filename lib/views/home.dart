@@ -23,7 +23,7 @@ class HomeView extends ConsumerWidget {
         ref.watch(productNotifierProvider);
     final cartItem = ref.watch(cartNotifierProvider);
 
-    debugPrint('Items in cart: $cartItem');
+    debugPrint('Items in cart: ${cartItem.value?.data.length}');
 
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);

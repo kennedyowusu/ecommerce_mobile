@@ -6,3 +6,4 @@ const String userURL = "${bASEURL}profile";
 const String productURL = "${bASEURL}products";
 const String categoriesURL = "${bASEURL}categories";
 const String cartURL = "${bASEURL}cart-items";
+const String createCartUrl = "${bASEURL}cart-item";

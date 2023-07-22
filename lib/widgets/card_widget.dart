@@ -1,27 +1,36 @@
-import 'package:ecommerce_ui/data/products.dart';
 import 'package:ecommerce_ui/models/cart_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/cart_state_notifier.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
+import 'package:ecommerce_ui/service/cart_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:get_storage/get_storage.dart';
 import '../constants/themes.dart';
 
 class ProductCardWidget extends ConsumerWidget {
-  const ProductCardWidget({
+  ProductCardWidget({
     super.key,
     required this.productIndex,
   });
 
   final int productIndex;
+  final GetStorage storage = GetStorage();
+  final CartService cartService = CartService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<ProductResponseModel> product =
         ref.watch(productNotifierProvider);
 
-    final List<Product> cart = ref.watch(cartStateNotifierProvider);
+    final List<CartModel> cart = ref.watch(cartStateNotifierProvider);
+
+    final int productId = product.when(
+      data: (data) => data.data[productIndex].id,
+      loading: () => 0,
+      error: (e, s) => 0,
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -94,35 +103,52 @@ class ProductCardWidget extends ConsumerWidget {
                       style: AppTheme.kCardTitle,
                     ),
                     IconButton(
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        ref
-                            .read(cartStateNotifierProvider.notifier)
-                            .addToCart(Product(
-                              id: product.when(
-                                data: (data) => data.data[productIndex].id,
-                                loading: () => 0,
-                                error: (e, s) => 0,
-                              ),
-                              productId: product.when(
-                                data: (data) => data.data[productIndex].id,
-                                loading: () => 0,
-                                error: (e, s) => 0,
-                              ),
-                              quantity: 1,
-                              userId: 1,
-                              totalPrice: product.when(
-                                data: (data) =>
-                                    double.parse(data.data[productIndex].price),
-                                loading: () => 0,
-                                error: (e, s) => 0,
-                              ),
-                            ));
-                      },
-                      // ),
+                      icon:
+                          cart.any((element) => element.productId == productId)
+                              ? Icon(
+                                  Icons.shopping_cart_outlined,
+                                  size: 30,
+                                )
+                              : Icon(
+                                  Icons.remove_shopping_cart_outlined,
+                                  size: 30,
+                                ),
+                      color:
+                          cart.any((element) => element.productId == productId)
+                              ? kPrimaryColor
+                              : Colors.red,
+                      onPressed: cart.isNotEmpty
+                          ? cart.any(
+                                  (element) => element.productId == productId)
+                              ? null
+                              : () {
+                                  final int userId = storage.read("userId");
+
+                                  final int productId = product.when(
+                                    data: (data) => data.data[productIndex].id,
+                                    loading: () => 0,
+                                    error: (e, s) => 0,
+                                  );
+
+                                  final double productPrice = product.when(
+                                    data: (data) => double.parse(
+                                        data.data[productIndex].price),
+                                    loading: () => 0,
+                                    error: (e, s) => 0,
+                                  );
+
+                                  cartService.addToCart(
+                                    userId,
+                                    productId,
+                                    1,
+                                    productPrice,
+                                  );
+
+                                  debugPrint(
+                                    "Cart Length: ${ref.watch(cartStateNotifierProvider).length}",
+                                  );
+                                }
+                          : null,
                     ),
                   ],
                 )

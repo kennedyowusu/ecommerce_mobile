@@ -14,7 +14,6 @@ class ProductCartView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final cartItem = ref.watch(itemBagProvider);
     final AsyncValue<CartResponseModel> cartItem =
         ref.watch(cartNotifierProvider);
 

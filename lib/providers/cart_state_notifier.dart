@@ -1,21 +1,23 @@
-import 'package:ecommerce_ui/data/products.dart';
 import 'package:ecommerce_ui/models/cart_model.dart';
-import 'package:ecommerce_ui/service/cart_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CartStateNotifier extends StateNotifier<List<Product>> {
+class CartStateNotifier extends StateNotifier<List<CartModel>> {
   CartStateNotifier() : super([]);
 
-  // final CartService cartService = CartService();
+  void addProductToCart(CartModel cartModel) {
+    final existingProductIndex = state.indexWhere(
+      (element) => element.productId == cartModel.productId,
+    );
 
-  // final List<CartModel> cart = [];
-
-  void addToCart(Product product) {
-    state = [...state, product];
+    if (existingProductIndex >= 0) {
+      state = state.where((element) => element.id != cartModel.id).toList();
+    } else {
+      state = [...state, cartModel];
+    }
   }
 
-  void removeProduct(CartModel product) {
-    state = state.where((element) => element.id != product.id).toList();
+  void removeProductFromCart(CartModel cartModel) {
+    state = state.where((element) => element.id != cartModel.id).toList();
   }
 
   void clearCart() {
@@ -23,8 +25,8 @@ class CartStateNotifier extends StateNotifier<List<Product>> {
   }
 }
 
-final StateNotifierProvider<CartStateNotifier, List<Product>>
+final StateNotifierProvider<CartStateNotifier, List<CartModel>>
     cartStateNotifierProvider =
-    StateNotifierProvider<CartStateNotifier, List<Product>>(
+    StateNotifierProvider<CartStateNotifier, List<CartModel>>(
   (ref) => CartStateNotifier(),
 );
