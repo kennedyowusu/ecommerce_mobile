@@ -1,4 +1,7 @@
+import 'package:ecommerce_ui/data/products.dart';
+import 'package:ecommerce_ui/models/cart_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
+import 'package:ecommerce_ui/providers/cart_state_notifier.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +20,9 @@ class ProductCardWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<ProductResponseModel> product =
         ref.watch(productNotifierProvider);
+
+    final List<Product> cart = ref.watch(cartStateNotifierProvider);
+
     return Container(
       decoration: BoxDecoration(
         color: kWhiteColor,
@@ -88,41 +94,34 @@ class ProductCardWidget extends ConsumerWidget {
                       style: AppTheme.kCardTitle,
                     ),
                     IconButton(
-                      // onPressed: () {},
                       icon: Icon(
                         Icons.shopping_cart_outlined,
                         size: 30,
                       ),
                       onPressed: () {
-                        // ref.read(productNotifierProvider.notifier).isSelectItem(
-                        //     product[productIndex].pid, productIndex);
-
-                        // if (product[productIndex].isSelected == false) {
-                        //   ref.read(itemBagProvider.notifier).addNewItemBag(
-                        //         ProductModel(
-                        //           pid: product[productIndex].pid,
-                        //           imgUrl: product[productIndex].imgUrl,
-                        //           title: product[productIndex].title,
-                        //           price: product[productIndex].price,
-                        //           shortDescription:
-                        //               product[productIndex].shortDescription,
-                        //           longDescription:
-                        //               product[productIndex].longDescription,
-                        //           review: product[productIndex].review,
-                        //           rating: product[productIndex].rating,
-                        //         ),
-                        //       );
-                        // } else {
-                        //   ref
-                        //       .read(itemBagProvider.notifier)
-                        //       .removeItem(product[productIndex].pid);
-                        // }
+                        ref
+                            .read(cartStateNotifierProvider.notifier)
+                            .addToCart(Product(
+                              id: product.when(
+                                data: (data) => data.data[productIndex].id,
+                                loading: () => 0,
+                                error: (e, s) => 0,
+                              ),
+                              productId: product.when(
+                                data: (data) => data.data[productIndex].id,
+                                loading: () => 0,
+                                error: (e, s) => 0,
+                              ),
+                              quantity: 1,
+                              userId: 1,
+                              totalPrice: product.when(
+                                data: (data) =>
+                                    double.parse(data.data[productIndex].price),
+                                loading: () => 0,
+                                error: (e, s) => 0,
+                              ),
+                            ));
                       },
-                      // icon: Icon(
-                      //   product[productIndex].isSelected
-                      //       ? Icons.check_circle
-                      //       : Icons.add_circle,
-                      //   size: 30,
                       // ),
                     ),
                   ],

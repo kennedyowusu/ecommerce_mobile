@@ -43,8 +43,9 @@ class CartService {
 
   // Add To Cart Method
   Future<void> addToCart(
-    int quantity,
+    int userId,
     int productId,
+    int quantity,
     int productPrice,
   ) async {
     final String token = storage.read('token');
