@@ -1,8 +1,11 @@
 import 'package:ecommerce_ui/constants/themes.dart';
+import 'package:ecommerce_ui/models/favorite_model.dart';
 import 'package:ecommerce_ui/models/products_model.dart';
 import 'package:ecommerce_ui/providers/providers.dart';
+import 'package:ecommerce_ui/providers/states/favorite_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_storage/get_storage.dart';
 
 class FavoriteProductCard extends ConsumerWidget {
   const FavoriteProductCard({
@@ -13,6 +16,9 @@ class FavoriteProductCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<ProductResponseModel> productController =
         ref.watch(productNotifierProvider);
+
+    final List<FavoriteModel> favoriteController =
+        ref.watch(favoriteStateNotifierProvider);
 
     return Card(
       elevation: 2,
@@ -64,9 +70,6 @@ class FavoriteProductCard extends ConsumerWidget {
             ),
           ),
           onPressed: () {
-            // ref.read(cartServiceProvider).deleteCartItem(
-
-            // show dialog when a user clicks on delete icon
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -100,9 +103,30 @@ class FavoriteProductCard extends ConsumerWidget {
                         backgroundColor: Colors.red,
                       ),
                       onPressed: () {
-                        // ref.read(cartServiceProvider).deleteCartItem(
-                        //   cartId: cartController.data!.data[index].id,
-                        // );
+                        final int productId = productController.when(
+                          data: (data) => data.data[0].id,
+                          loading: () => 0,
+                          error: (e, s) => 0,
+                        );
+
+                        final GetStorage storage = GetStorage();
+
+                        final FavoriteModel favoriteModelToRemove =
+                            favoriteController.firstWhere(
+                          (favorite) =>
+                              favorite.productId == productId.toString(),
+                          orElse: () => FavoriteModel(
+                            id: 0,
+                            productId: productId.toString(),
+                            userId: storage.read('userId').toString(),
+                          ),
+                        );
+
+                        ref
+                            .read(favoriteStateNotifierProvider.notifier)
+                            .removeProductFromFavorite(favoriteModelToRemove);
+
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         'Delete',

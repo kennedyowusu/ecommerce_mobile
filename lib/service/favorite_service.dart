@@ -68,14 +68,42 @@ class FavoriteService {
         ),
       );
 
-      debugPrint(response.data.toString());
-
       if (response.statusCode != 201) {
         final String errorMessage = response.data['message'];
         ToastWidget(message: errorMessage);
         throw Exception(errorMessage);
       } else {
         ToastWidget(message: 'Product Favorite successful');
+        debugPrint(response.data.toString());
+      }
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<void> deleteFavoriteItem(int productId) async {
+    final String token = storage.read('token');
+
+    try {
+      final Response response = await dio.delete(
+        "$favoriteUrl/$productId",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      debugPrint(response.data.toString());
+
+      if (response.statusCode != 200) {
+        final String errorMessage = response.data['message'];
+        ToastWidget(message: errorMessage);
+        throw Exception(errorMessage);
+      } else {
+        ToastWidget(message: 'Product Deleted Successfully');
         debugPrint(response.data.toString());
       }
     } on DioException catch (e) {
