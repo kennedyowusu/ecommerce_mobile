@@ -27,22 +27,10 @@ class ProductDetailsView extends ConsumerWidget {
     final AsyncValue<FavoriteResponseModel> favoriteController =
         ref.watch(favoriteNotifierProvider);
 
-    final List<FavoriteModel> favorite =
-        ref.watch(favoriteStateNotifierProvider);
-
-    debugPrint("$favoriteController");
-
-    final int productId = productController.when(
-      data: (data) => data.data[getIndex].id,
-      loading: () => 0,
-      error: (e, s) => 0,
-    );
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(
-
           title: 'Product Details',
         ),
       ),

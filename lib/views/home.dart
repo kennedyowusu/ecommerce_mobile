@@ -26,9 +26,6 @@ class HomeView extends ConsumerWidget {
     final AsyncValue<CategoryModel> categoryController =
         ref.watch(categoryNotifierProvider);
 
-    final AsyncValue<ProductResponseModel> productController =
-        ref.watch(productNotifierProvider);
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),

@@ -17,8 +17,6 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<ProductsModel> cartItem = ref.watch(itemBagProvider);
-
     final UserModel user = UserModel.fromJson(storage.read('user'));
 
     return Scaffold(
