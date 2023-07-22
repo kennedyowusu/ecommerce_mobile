@@ -54,7 +54,7 @@ class ProductCartView extends ConsumerWidget {
                           productController.when(
                             data: (data) => data.data[index].image,
                             error: (error, stackTrace) => '',
-                            loading: () => '',
+                            loading: () => 'Loading...',
                           ),
                           width: 60,
                           height: 60,
