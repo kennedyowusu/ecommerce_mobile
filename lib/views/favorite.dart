@@ -15,12 +15,10 @@ class FavoriteView extends ConsumerWidget {
     final AsyncValue<FavoriteResponseModel> favoriteController =
         ref.watch(favoriteNotifierProvider);
 
-    debugPrint("$favoriteController");
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(cartItem: [], title: 'Favorite'),
+        child: CustomAppBar(title: 'Favorite'),
       ),
       drawer: const AppDrawer(),
       body: SafeArea(

@@ -24,7 +24,7 @@ class ProfileView extends ConsumerWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
-        child: CustomAppBar(cartItem: [], title: 'Profile'),
+        child: CustomAppBar(title: 'Profile'),
       ),
       drawer: const AppDrawer(),
       body: Column(

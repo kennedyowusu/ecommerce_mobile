@@ -24,7 +24,7 @@ class ProductCartView extends ConsumerWidget {
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(
-          cartItem: [],
+
           title: 'Cart',
         ),
       ),

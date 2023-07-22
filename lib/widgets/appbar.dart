@@ -8,12 +8,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CustomAppBar extends ConsumerWidget {
   CustomAppBar({
     super.key,
-    required this.cartItem,
     required this.title,
     this.icon,
   });
 
-  final List<CartModel> cartItem;
   final String title;
   final IconButton? icon;
 
