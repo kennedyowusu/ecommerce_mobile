@@ -52,20 +52,20 @@ class ProductDetailsView extends ConsumerWidget {
                 height: 300,
                 width: double.infinity,
                 padding: const EdgeInsets.all(42),
-                color: kLightBackground,
+                color: Colors.transparent,
                 child: productController.when(
                   data: (data) => data.data[getIndex].image == null
                       ? Image.asset(
                           'assets/products/I1.png',
-                          fit: BoxFit.contain,
-                          height: 300,
-                          width: 300,
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: double.infinity,
                         )
                       : Image.network(
                           data.data[getIndex].image,
-                          fit: BoxFit.contain,
-                          height: 300,
-                          width: 300,
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: double.infinity,
                         ),
                   loading: () => const Center(
                     child: CircularProgressIndicator(),
@@ -135,10 +135,11 @@ class ProductDetailsView extends ConsumerWidget {
                     ),
                     const Gap(8),
                     productController.when(
-                      data: (data) => Text(
-                        data.data[getIndex].description,
-                        style: AppTheme.kCardTitle.copyWith(fontSize: 18),
-                      ),
+                      data: (data) => Text(data.data[getIndex].description,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                          )),
                       loading: () => const Center(
                         child: CircularProgressIndicator(),
                       ),

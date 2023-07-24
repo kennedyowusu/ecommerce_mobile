@@ -19,6 +19,12 @@ class ProductCardWidget extends ConsumerWidget {
   final GetStorage storage = GetStorage();
   final CartService cartService = CartService();
 
+  String truncateDescription(String description) {
+    return description.length > 17
+        ? '${description.substring(0, 25)}...'
+        : description;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<ProductResponseModel> product =
@@ -63,8 +69,8 @@ class ProductCardWidget extends ConsumerWidget {
                   loading: () => "Loading...",
                   error: (e, s) => 'Error: $e',
                 ),
-                fit: BoxFit.contain,
-                height: MediaQuery.of(context).size.height * 0.2,
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height * 0.5,
               ),
             ),
           ),
@@ -85,11 +91,14 @@ class ProductCardWidget extends ConsumerWidget {
                 ),
                 Text(
                   product.when(
-                    data: (data) => data.data[productIndex].description,
+                    data: (data) => truncateDescription(
+                        data.data[productIndex].description),
                     loading: () => "Loading...",
                     error: (e, s) => 'Error: $e',
                   ),
                   style: AppTheme.kBodyText,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,52 +112,35 @@ class ProductCardWidget extends ConsumerWidget {
                       style: AppTheme.kCardTitle,
                     ),
                     IconButton(
-                      icon:
-                          cart.any((element) => element.productId == productId)
-                              ? Icon(
-                                  Icons.shopping_cart_outlined,
-                                  size: 30,
-                                )
-                              : Icon(
-                                  Icons.remove_shopping_cart_outlined,
-                                  size: 30,
-                                ),
-                      color:
-                          cart.any((element) => element.productId == productId)
-                              ? kPrimaryColor
-                              : Colors.red,
-                      onPressed: cart.isNotEmpty
-                          ? cart.any(
-                                  (element) => element.productId == productId)
-                              ? null
-                              : () {
-                                  final int userId = storage.read("userId");
+                      icon: Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 30,
+                      ),
+                      color: kPrimaryColor,
+                      onPressed: () {
+                        final int userId = storage.read("userId");
 
-                                  final int productId = product.when(
-                                    data: (data) => data.data[productIndex].id,
-                                    loading: () => 0,
-                                    error: (e, s) => 0,
-                                  );
+                        final int productId = product.when(
+                          data: (data) => data.data[productIndex].id,
+                          loading: () => 0,
+                          error: (e, s) => 0,
+                        );
 
-                                  final double productPrice = product.when(
-                                    data: (data) => double.parse(
-                                        data.data[productIndex].price),
-                                    loading: () => 0,
-                                    error: (e, s) => 0,
-                                  );
+                        final double productPrice = product.when(
+                          data: (data) =>
+                              double.parse(data.data[productIndex].price),
+                          loading: () => 0,
+                          error: (e, s) => 0,
+                        );
 
-                                  cartService.addToCart(
-                                    userId,
-                                    productId,
-                                    1,
-                                    productPrice,
-                                  );
-
-                                  debugPrint(
-                                    "Cart Length: ${ref.watch(cartStateNotifierProvider).length}",
-                                  );
-                                }
-                          : null,
+                        cartService.addToCart(
+                          userId,
+                          productId,
+                          1,
+                          productPrice,
+                        );
+                        debugPrint('Cart: $cart');
+                      },
                     ),
                   ],
                 )

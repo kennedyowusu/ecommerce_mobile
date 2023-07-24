@@ -20,7 +20,7 @@ class FavoriteView extends ConsumerWidget {
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(title: 'Favorite'),
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

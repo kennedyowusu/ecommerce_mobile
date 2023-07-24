@@ -21,7 +21,7 @@ class ProfileView extends ConsumerWidget {
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(title: 'Profile'),
       ),
-      drawer: const AppDrawer(),
+      drawer:  AppDrawer(),
       body: Column(
         children: [
           Expanded(

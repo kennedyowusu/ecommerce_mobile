@@ -32,7 +32,7 @@ class HomeView extends ConsumerWidget {
           title: 'Home',
         ),
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

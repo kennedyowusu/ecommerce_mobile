@@ -74,21 +74,22 @@ class RegistrationView extends ConsumerWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(controller: nameController),
+                    InputField(controller: nameController, isPassword: false),
                     SizedBox(height: 20),
                     Text(
                       "Email Address",
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(controller: emailController),
+                    InputField(controller: emailController, isPassword: false),
                     SizedBox(height: 20),
                     Text(
                       "Password",
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(controller: passwordController),
+                    InputField(
+                        controller: passwordController, isPassword: true),
                     SizedBox(height: 20),
                     state is AuthenticationLoading
                         ? const Center(

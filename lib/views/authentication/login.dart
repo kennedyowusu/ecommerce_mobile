@@ -74,6 +74,7 @@ class LoginView extends ConsumerWidget {
                     SizedBox(height: 5),
                     InputField(
                       controller: emailController,
+                      isPassword: false,
                     ),
                     SizedBox(height: 20),
                     Text(
@@ -81,7 +82,10 @@ class LoginView extends ConsumerWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     SizedBox(height: 5),
-                    InputField(controller: passwordController),
+                    InputField(
+                      controller: passwordController,
+                      isPassword: true,
+                    ),
                     SizedBox(height: 20),
                     state is AuthenticationLoading
                         ? const Center(

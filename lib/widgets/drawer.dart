@@ -1,13 +1,17 @@
 import 'package:ecommerce_ui/constants/colors.dart';
+import 'package:ecommerce_ui/models/user_model.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  AppDrawer({super.key});
+
+  final GetStorage storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    final UserModel user = UserModel.fromJson(storage.read('user'));
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -18,7 +22,7 @@ class AppDrawer extends StatelessWidget {
             ),
             child: Center(
               child: Column(
-                children: const [
+                children: [
                   CircleAvatar(
                     radius: 50,
                     backgroundImage:
@@ -28,7 +32,7 @@ class AppDrawer extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'John Doe',
+                    user.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
