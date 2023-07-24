@@ -1,5 +1,4 @@
 import 'package:ecommerce_ui/constants/colors.dart';
-import 'package:ecommerce_ui/models/user_model.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,7 +10,8 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = UserModel.fromJson(storage.read('user'));
+    final Map<String, dynamic> userStoredData = storage.read("user");
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -32,7 +32,7 @@ class AppDrawer extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    user.name,
+                    userStoredData["name"].toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

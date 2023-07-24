@@ -1,5 +1,4 @@
 import 'package:ecommerce_ui/constants/themes.dart';
-import 'package:ecommerce_ui/models/user_model.dart';
 import 'package:ecommerce_ui/views/authentication/login.dart';
 import 'package:ecommerce_ui/widgets/appbar.dart';
 import 'package:ecommerce_ui/widgets/drawer.dart';
@@ -14,14 +13,14 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final UserModel user = UserModel.fromJson(storage.read('user'));
+    final Map<String, dynamic> userStoredData = storage.read("user");
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(double.infinity, 60.0),
         child: CustomAppBar(title: 'Profile'),
       ),
-      drawer:  AppDrawer(),
+      drawer: AppDrawer(),
       body: Column(
         children: [
           Expanded(
@@ -44,7 +43,7 @@ class ProfileView extends ConsumerWidget {
                     height: 10,
                   ),
                   Text(
-                    user.name,
+                    userStoredData["name"].toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -54,7 +53,7 @@ class ProfileView extends ConsumerWidget {
                     height: 10,
                   ),
                   Text(
-                    user.email,
+                    userStoredData["email"].toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
