@@ -23,12 +23,13 @@ class FavoriteProductCard extends ConsumerWidget {
     return Card(
       elevation: 2,
       child: ListTile(
-        title: productController.when(
+        leading: productController.when(
           data: (data) => Text(
             data.data[0].name,
             style: const TextStyle(
               color: kPrimaryColor,
               fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
           ),
           loading: () => const Center(
@@ -38,12 +39,12 @@ class FavoriteProductCard extends ConsumerWidget {
           ),
           error: (error, stackTrace) => Text(error.toString()),
         ),
-        subtitle: productController.when(
+        title: productController.when(
           data: (data) => Text(
-            data.data[0].description,
+            '\$${data.data[0].price}',
             style: const TextStyle(
               color: kPrimaryColor,
-              fontSize: 14,
+              fontSize: 16,
             ),
           ),
           loading: () => const Center(
