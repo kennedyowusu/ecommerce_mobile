@@ -13,7 +13,7 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Map<String, dynamic> userStoredData = storage.read("user");
+    final userStoredData = storage.read("user");
 
     return Scaffold(
       appBar: PreferredSize(

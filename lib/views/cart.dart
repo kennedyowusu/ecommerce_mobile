@@ -181,13 +181,18 @@ class ProductCartView extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: kPrimaryColor),
                         ),
-                        // Text(
-                        //   '\$${ref.watch(priceCalcProvider)}',
-                        //   style: const TextStyle(
-                        //       fontSize: 18,
-                        //       fontWeight: FontWeight.bold,
-                        //       color: kPrimaryColor),
-                        // ),
+                        Text(
+                          '\$${cartItem.when(
+                            data: (data) =>
+                                data.data.first.totalPrice.toString(),
+                            error: (error, stackTrace) => '',
+                            loading: () => '',
+                          )}',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: kPrimaryColor),
+                        ),
                       ],
                     ),
                   ],
